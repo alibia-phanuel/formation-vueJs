@@ -1,6 +1,9 @@
 <template>
-  <!-- Le <a> englobe tout l'article pour le rendre cliquable -->
-  <a :href="'#post:' + props.post.id" class="post-card">
+  <!-- ✅ RouterLink gère la navigation Vue Router sans rechargement de page -->
+  <RouterLink
+    :to="{ name: 'post', params: { id: props.post.id } }"
+    class="post-card"
+  >
     <article>
       <img
         :src="'https://picsum.photos/seed/' + props.post.id + '/400/200'"
@@ -16,7 +19,7 @@
         <small>Article #{{ props.post.id }}</small>
       </footer>
     </article>
-  </a>
+  </RouterLink>
 </template>
 
 <script setup>

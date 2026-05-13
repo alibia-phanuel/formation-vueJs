@@ -1,7 +1,7 @@
 <template>
   <div class="post-page">
     <!-- Bouton retour vers le blog -->
-    <a href="#blog">← Retour au blog</a>
+    <RouterLink :to="{ name: 'blog' }">← Retour au blog</RouterLink>
 
     <p v-if="state === 'ERROR'">❌ Erreur de chargement de l'article.</p>
 
@@ -9,7 +9,8 @@
       <template v-if="state === 'DONE'">
         <article>
           <img
-            :src="'https://picsum.photos/seed/' + data.id + '/800/300'"
+            v-if="data?.id"
+            :src="`https://picsum.photos/seed/${data.id}/800/300`"
             :alt="data.title"
             class="cover"
           />
@@ -27,11 +28,11 @@
 <script setup>
 import { computed } from "vue";
 import { useFetch } from "../composables/useFetch.js";
-
+import { useRoute } from "vue-router";
 const props = defineProps({
   id: String, // l'id vient de App.vue via pageId
 });
-
+const route = useRoute(); // on peut aussi récupérer l'id depuis la route avec useRoute() et route.params.id
 // L'URL se construit avec l'id reçu en prop
 const url = computed(
   () => `https://jsonplaceholder.typicode.com/posts/${props.id}`,
